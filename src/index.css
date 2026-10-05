@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/*
+  Design tokens. The palette is taken from the six field photographs:
+  paddy green (young rice and tree lines), river teal, Barind laterite (the red soil of Godagari),
+  sunrise gold, and a pale morning-haze white for the page background.
+*/
+@theme {
+  /* Paddy green — primary actions, KEEP */
+  --color-primary-50: #f0f6ec;
+  --color-primary-100: #dcebd3;
+  --color-primary-200: #b9d8aa;
+  --color-primary-300: #8dbe78;
+  --color-primary-400: #62a04f;
+  --color-primary-500: #43863a;
+  --color-primary-600: #2f6e2f;
+  --color-primary-700: #245a28;
+  --color-primary-800: #1c4722;
+  --color-primary-900: #153a1d;
+  --color-primary-950: #0d2614;
+
+  /* River teal — data, SHIFT, NASA/real-data tags (overrides Tailwind's sky scale) */
+  --color-sky-50: #eef6f6;
+  --color-sky-100: #d5eaea;
+  --color-sky-200: #a9d3d3;
+  --color-sky-300: #78b8b9;
+  --color-sky-500: #2f8a8f;
+  --color-sky-600: #237479;
+  --color-sky-700: #1c5f64;
+  --color-sky-800: #184d52;
+  --color-sky-900: #143f44;
+
+  /* Sunrise gold — ADJUST, harvest, "your plot" */
+  --color-paddy-50: #fdf6e6;
+  --color-paddy-100: #f8e6bd;
+  --color-paddy-300: #edc067;
+  --color-paddy-500: #d08f26;
+  --color-paddy-700: #87580e;
+
+  /* Barind laterite — soil */
+  --color-clay-50: #faf0ea;
+  --color-clay-100: #f2d9ca;
+  --color-clay-300: #d99a73;
+  --color-clay-500: #a8552a;
+  --color-clay-700: #6f3418;
+
+  --color-ink: #13261b;
+  --color-muted: #566a5e;
+  --color-border: #dfe7dc;
+  --color-canvas: #f3f6f0;
+  --color-soft: #eaf1e5;
+
+  --font-sans: "Hind Siliguri", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Anek Bangla", "Hind Siliguri", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-card: 0 1px 0 rgba(19, 38, 27, .04), 0 8px 24px -12px rgba(19, 38, 27, .14);
+  --shadow-lift: 0 18px 48px -18px rgba(13, 38, 20, .35);
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  html, body, #root { min-height: 100%; }
+  body {
+    margin: 0;
+    background: #f3f6f0;
+    color: #13261b;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    font-stretch: 88%;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  h1 { line-height: 1.12; }
+  h2, h3 { line-height: 1.2; }
+  p { text-wrap: pretty; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button, a { -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 3px solid #8dbe78; outline-offset: 2px; border-radius: 8px; }
+  ::selection { background: #b9d8aa; color: #0d2614; }
+}
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+.page-shell { width: min(1200px, calc(100% - 32px)); margin-inline: auto; }
+.surface-card { border: 1px solid #dfe7dc; background: #ffffff; box-shadow: var(--shadow-card); }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { scrollbar-width: none; }
+.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, .15); border-radius: 3px; }
+.leaflet-container { font-family: inherit; background: #e3ebe0; z-index: 0; }
+.leaflet-control-attribution { font-size: 10px; }
+.chip { display: inline-flex; align-items: center; gap: .25rem; border-radius: 9999px; padding: .125rem .5rem; font-size: 11.5px; font-weight: 600; line-height: 1.5; white-space: nowrap; }
+
+/* Map pin used by the land picker (a Leaflet divIcon). */
+.fs-pin { filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .35)); }
+.fs-pin svg { display: block; }
+.leaflet-marker-draggable { cursor: grab; }
+.leaflet-dragging .leaflet-marker-draggable { cursor: grabbing; }
+
+/* Buttons used by the season-planner steps */
+.btn-primary, .btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: .75rem; padding: .7rem 1rem; font-weight: 600; font-size: .9375rem; transition: background-color .15s, transform .1s; }
+.btn-primary { background: #2f6e2f; color: #fff; }
+.btn-primary:hover { background: #245a28; }
+.btn-ghost { background: #fff; border: 1px solid #dfe7dc; color: #13261b; }
+.btn-ghost:hover { background: #f0f6ec; }
+.btn-primary:disabled, .btn-ghost:disabled { opacity: .45; pointer-events: none; }
+.btn-primary:active, .btn-ghost:active { transform: scale(.98); }
+
+/* One orchestrated entrance on the landing hero only. */
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.hero-rise > * { animation: rise .7s cubic-bezier(.2, .7, .2, 1) both; }
+.hero-rise > *:nth-child(2) { animation-delay: .08s; }
+.hero-rise > *:nth-child(3) { animation-delay: .16s; }
+.hero-rise > *:nth-child(4) { animation-delay: .24s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
